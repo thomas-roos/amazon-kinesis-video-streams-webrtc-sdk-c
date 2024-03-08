@@ -1548,6 +1548,11 @@ STATUS addTransceiver(PRtcPeerConnection pPeerConnection, PRtcMediaStreamTrack p
             clockRate = OPUS_CLOCKRATE;
             break;
 
+        case RTC_CODEC_AAC:
+            depayFunc = depayAacFromRtpPayload;
+            clockRate = AAC_CLOCKRATE;
+            break;
+
         case RTC_CODEC_MULAW:
         case RTC_CODEC_ALAW:
             depayFunc = depayG711FromRtpPayload;
@@ -1608,8 +1613,23 @@ STATUS addSupportedCodec(PRtcPeerConnection pPeerConnection, RTC_CODEC rtcCodec)
 
     CHK(pKvsPeerConnection != NULL, STATUS_NULL_ARG);
 
-    CHK_STATUS(hashTablePut(pKvsPeerConnection->pCodecTable, rtcCodec, 0));
-
+    if (rtcCodec == RTC_CODEC_H264_PROFILE_42E01F_LEVEL_ASYMMETRY_ALLOWED_PACKETIZATION_MODE) {
+        CHK_STATUS(hashTablePut(pKvsPeerConnection->pCodecTable, rtcCodec, DEFAULT_PAYLOAD_H264));
+    } else if (rtcCodec == RTC_CODEC_VP8) {
+        CHK_STATUS(hashTablePut(pKvsPeerConnection->pCodecTable, rtcCodec, DEFAULT_PAYLOAD_VP8));
+    } else if (rtcCodec == RTC_CODEC_H265) {
+        CHK_STATUS(hashTablePut(pKvsPeerConnection->pCodecTable, rtcCodec, DEFAULT_PAYLOAD_H265));
+    } else if (rtcCodec == RTC_CODEC_OPUS) {
+        CHK_STATUS(hashTablePut(pKvsPeerConnection->pCodecTable, rtcCodec, DEFAULT_PAYLOAD_OPUS));
+    } else if (rtcCodec == RTC_CODEC_MULAW) {
+        CHK_STATUS(hashTablePut(pKvsPeerConnection->pCodecTable, rtcCodec, DEFAULT_PAYLOAD_MULAW));
+    } else if (rtcCodec == RTC_CODEC_ALAW) {
+        CHK_STATUS(hashTablePut(pKvsPeerConnection->pCodecTable, rtcCodec, DEFAULT_PAYLOAD_ALAW));
+    } else if (rtcCodec == RTC_CODEC_AAC) {
+        CHK_STATUS(hashTablePut(pKvsPeerConnection->pCodecTable, rtcCodec, DEFAULT_PAYLOAD_AAC));
+    } else {
+        CHK_STATUS(hashTablePut(pKvsPeerConnection->pCodecTable, rtcCodec, 0));
+    }
 CleanUp:
 
     LEAVES();
