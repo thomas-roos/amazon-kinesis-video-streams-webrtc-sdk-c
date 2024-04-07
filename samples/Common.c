@@ -591,11 +591,7 @@ STATUS createSampleStreamingSession(PSampleConfiguration pSampleConfiguration, P
 
     // Add a SendRecv Transceiver of type audio
     audioTrack.kind = MEDIA_STREAM_TRACK_KIND_AUDIO;
-#ifdef USE_AUDIO_AAC
-    audioTrack.codec = RTC_CODEC_AAC;
-#else
     audioTrack.codec = RTC_CODEC_OPUS;
-#endif
     audioRtpTransceiverInit.direction = RTC_RTP_TRANSCEIVER_DIRECTION_SENDRECV;
     audioRtpTransceiverInit.rollingBufferDurationSec = 3;
     // For opus, the bitrate could be between 6 Kbps to 510 Kbps
