@@ -271,7 +271,6 @@ STATUS setBytesFromRtpPacket(PRtpPacket pRtpPacket, PBYTE pRawPacket, UINT32 pac
     CHK(pRtpPacket != NULL && pRawPacket != NULL, STATUS_NULL_ARG);
 
     packetLengthNeeded = RTP_GET_RAW_PACKET_SIZE(pRtpPacket);
-    printf("packetLengthNeeded = %d\n", packetLengthNeeded);
     CHK(packetLength >= packetLengthNeeded, STATUS_BUFFER_TOO_SMALL);
     /*
      *  0                   1                   2                   3
