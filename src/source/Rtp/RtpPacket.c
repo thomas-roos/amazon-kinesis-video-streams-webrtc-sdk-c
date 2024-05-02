@@ -260,7 +260,6 @@ STATUS setBytesFromRtpPacket(PRtpPacket pRtpPacket, PBYTE pRawPacket, UINT32 pac
     STATUS retStatus = STATUS_SUCCESS;
     PRtpPacketHeader pHeader = &pRtpPacket->header;
     UINT32 packetLengthNeeded = 0;
-    PBYTE pCurPtr = pRawPacket;
     UINT16 i;
     RtpResult_t rtpResult;
     RtpPacket_t pkt;
@@ -289,6 +288,7 @@ STATUS setBytesFromRtpPacket(PRtpPacket pRtpPacket, PBYTE pRawPacket, UINT32 pac
 
     rtpResult = Rtp_Init(&(ctx));
     CHK(rtpResult == RTP_RESULT_OK, convertRtpErrorCode(rtpResult));
+    MEMSET(&pkt, 0, SIZEOF(RtpPacket_t));
 
     if (pHeader->padding) {
         pkt.header.flags |= RTP_HEADER_FLAG_PADDING;
