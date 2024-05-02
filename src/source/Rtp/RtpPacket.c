@@ -189,6 +189,7 @@ STATUS setRtpPacketFromBytes(PBYTE rawPacket, UINT32 packetLength, PRtpPacket pR
     rtpResult = Rtp_Init(&(ctx));
     CHK(rtpResult == RTP_RESULT_OK, convertRtpErrorCode(rtpResult));
 
+    MEMSET(&deserializedPkt, 0, SIZEOF(RtpPacket_t));
     rtpResult = Rtp_DeSerialize(&(ctx), rawPacket, packetLength, &(deserializedPkt));
     CHK(rtpResult == RTP_RESULT_OK, convertRtpErrorCode(rtpResult));
 
@@ -327,6 +328,12 @@ STATUS setBytesFromRtpPacket(PRtpPacket pRtpPacket, PBYTE pRawPacket, UINT32 pac
 
     rtpResult = Rtp_Serialize(&(ctx), &(pkt), pRawPacket, (size_t *) &packetLengthNeeded);
     CHK(rtpResult == RTP_RESULT_OK, convertRtpErrorCode(rtpResult));
+    if( rtpResult != RTP_RESULT_OK )
+    {
+        printf("Fail - extensionLength %d\n", pkt.header.extension.extensionPayloadLength);
+        printf("Fail - pPayload len %zu\n", pkt.payloadLength);
+        printf("Fail - csrcCount len %d\n", pkt.header.csrcCount);
+    }
 
 CleanUp:
     LEAVES();
