@@ -326,14 +326,8 @@ STATUS setBytesFromRtpPacket(PRtpPacket pRtpPacket, PBYTE pRawPacket, UINT32 pac
         pkt.payloadLength = pRtpPacket->payloadLength;
     }
 
-    rtpResult = Rtp_Serialize(&(ctx), &(pkt), pRawPacket, (size_t *) &packetLengthNeeded);
+    rtpResult = Rtp_Serialize(&(ctx), &(pkt), pRawPacket, &packetLengthNeeded);
     CHK(rtpResult == RTP_RESULT_OK, convertRtpErrorCode(rtpResult));
-    if( rtpResult != RTP_RESULT_OK )
-    {
-        printf("Fail - extensionLength %d\n", pkt.header.extension.extensionPayloadLength);
-        printf("Fail - pPayload len %zu\n", pkt.payloadLength);
-        printf("Fail - csrcCount len %d\n", pkt.header.csrcCount);
-    }
 
 CleanUp:
     LEAVES();
