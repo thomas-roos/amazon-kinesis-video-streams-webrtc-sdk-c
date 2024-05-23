@@ -7,6 +7,16 @@
 extern "C" {
 #endif
 
+typedef STATUS (*CreateCertificateAndKeyFunc)(uint32_t, int, void**, void**);
+typedef void (*FreeCertificateFunc)(void*);
+typedef void (*FreePrivateKeyFunc)(void*);
+
+typedef struct {
+    CreateCertificateAndKeyFunc createCertificateAndKey;
+    FreeCertificateFunc freeCertificate;
+    FreePrivateKeyFunc freePrivateKey;
+} CryptoCallbacks;
+
 #ifdef KVS_USE_OPENSSL
 #define KVS_RSA_F4                  RSA_F4
 #define KVS_MD5_DIGEST_LENGTH       MD5_DIGEST_LENGTH
