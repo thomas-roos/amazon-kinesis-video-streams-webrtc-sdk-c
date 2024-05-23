@@ -11,6 +11,12 @@
 extern "C" {
 #endif
 
+#ifdef KVS_USE_OPENSSL
+#include "Crypto_openssl.h"
+#elif KVS_USE_MBEDTLS
+#include "Crypto_mbedtls.h"
+#endif
+
 #define MAX_SRTP_MASTER_KEY_LEN   16
 #define MAX_SRTP_SALT_KEY_LEN     14
 #define MAX_DTLS_RANDOM_BYTES_LEN 32

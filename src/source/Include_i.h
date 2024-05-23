@@ -28,25 +28,6 @@ extern "C" {
 #include "kvssdp/sdp_data_types.h"
 #include "kvsstun/stun_data_types.h"
 #include "kvsrtp/rtp_data_types.h"
-
-#ifdef KVS_USE_OPENSSL
-#include <openssl/bio.h>
-#include <openssl/err.h>
-#include <openssl/hmac.h>
-#include <openssl/md5.h>
-#include <openssl/rand.h>
-#include <openssl/sha.h>
-#include <openssl/ssl.h>
-#elif KVS_USE_MBEDTLS
-#include <mbedtls/ssl.h>
-#include <mbedtls/entropy.h>
-#include <mbedtls/ctr_drbg.h>
-#include <mbedtls/error.h>
-#include <mbedtls/certs.h>
-#include <mbedtls/sha256.h>
-#include <mbedtls/md5.h>
-#endif
-
 #include <srtp2/srtp.h>
 
 // INET/INET6 MUST be defined before usrsctp
